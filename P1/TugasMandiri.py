@@ -1,7 +1,7 @@
 import os 
 def buat_folder(P1): 
     folder_sudah_ada = os.path.exists(P1)
-    print(f"Validasi sebelum folder dibuat ({P1}) : {folder_sudah_ada}")
+    print(f"Apakah folder ({P1}) sudah ada? : {folder_sudah_ada}")
 
     if not folder_sudah_ada: 
         os.mkdir(P1) 
@@ -11,7 +11,7 @@ def buat_folder(P1):
  
 def simpan_data(nama_file, isi_teks): 
     file_sudah_ada = os.path.exists(nama_file)
-    print(f"Validasi sebelum file dibuat ({nama_file}) : {file_sudah_ada}")
+    print(f"Apakah file ({nama_file}) sudah ada? : {file_sudah_ada}")
 
     with open(nama_file, 'a') as f: 
         f.write(isi_teks + "\n") 
