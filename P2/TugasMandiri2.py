@@ -1,12 +1,9 @@
 import os
 from datetime import datetime
-
 import requests
 from bs4 import BeautifulSoup
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 
 def buat_folder(nama_folder):
     if not os.path.exists(nama_folder):
@@ -14,7 +11,6 @@ def buat_folder(nama_folder):
         print(f"Folder '{nama_folder}' berhasil dibuat.")
     else:
         print(f"Folder '{nama_folder}' sudah ada.")
-
 
 def scraping_kompas_to_file():
     url = "https://www.kompas.com/tag/inet"
@@ -56,6 +52,5 @@ def scraping_kompas_to_file():
         file.write("\n".join(hasil))
 
     print(f"Berhasil menyimpan {len(hasil) // 3} berita ke {nama_file}")
-
 
 scraping_kompas_to_file()

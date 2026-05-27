@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup  
 
 def ambil_judul_detik():  
-    url = "https://inet.det"  
+    url = "https://www.kompas.com/tag/inet"  
 
     # Mengambil HTML dari detik  
     response = requests.get(url)  
