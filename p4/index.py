@@ -1,3 +1,5 @@
+import os
+import sys
 import re
 import requests
 from bs4 import BeautifulSoup
@@ -5,6 +7,11 @@ import mysql.connector
 from datetime import datetime
 import pandas as pd
 from urllib.parse import urlsplit, urlunsplit
+
+# Setup UTF-8 console output for Windows to prevent UnicodeEncodeError with emojis
+if sys.platform.startswith("win"):
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
 
 def bersihkan_teks(teks):
     if teks is None:
@@ -39,7 +46,11 @@ def format_waktu_scraping(waktu):
     return waktu.strftime("%d%m%Y")
 
 
-def export_to_excel(rows, filename="hasil_cleaning.xlsx"):
+def export_to_excel(rows, filename=None):
+    if filename is None:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        filename = os.path.join(script_dir, "hasil_cleaning.xlsx")
+
     if not rows:
         print("⚠️ Tidak ada data untuk diekspor ke Excel.")
         return
