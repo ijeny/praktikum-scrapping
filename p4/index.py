@@ -1,17 +1,10 @@
-import os
-import sys
 import re
 import requests
 from bs4 import BeautifulSoup
 import mysql.connector
 from datetime import datetime
 import pandas as pd
-from urllib.parse import urlsplit, urlunsplit
-
-# Setup UTF-8 console output for Windows to prevent UnicodeEncodeError with emojis
-if sys.platform.startswith("win"):
-    sys.stdout.reconfigure(encoding='utf-8')
-    sys.stderr.reconfigure(encoding='utf-8')
+import os
 
 def bersihkan_teks(teks):
     if teks is None:
@@ -24,26 +17,13 @@ def bersihkan_teks(teks):
     # Normalisasi Unicode dan hapus karakter non-printable
     teks = re.sub(r"[\s\u00A0]+", " ", teks)
 
-    # Hapus tanda baca agar judul menjadi clean
-    teks = re.sub(r"[^\w\s]", "", teks)
-    teks = re.sub(r"[_]+", " ", teks)
-    teks = " ".join(teks.split())
-
     return teks
 
 
 def normalisasi_url(url):
     if url is None:
         return url
-
-    url = url.strip()
-    hasil = urlsplit(url)
-    url_bersih = urlunsplit((hasil.scheme, hasil.netloc, hasil.path, "", ""))
-    return re.sub(r"[^A-Za-z]", "", url_bersih)
-
-
-def format_waktu_scraping(waktu):
-    return waktu.strftime("%d%m%Y")
+    return url.strip()
 
 
 def export_to_excel(rows, filename=None):
@@ -58,7 +38,6 @@ def export_to_excel(rows, filename=None):
     df = pd.DataFrame(rows)
     df.to_excel(filename, index=False)
     print(f"📦 Data berhasil diekspor ke {filename}")
-
 
 def ambil_judul_detik():
     url = "https://inet.detik.com/"
@@ -91,6 +70,7 @@ def ambil_judul_detik():
                 judul_clean TEXT,
                 url_link TEXT,
                 url_link_clean TEXT,
+                url_gambar TEXT,
                 waktu_scraping DATETIME
             )
             """
@@ -108,28 +88,29 @@ def ambil_judul_detik():
                 print("❌ Tidak ditemukan judul berita di halaman.")
             else:
                 waktu_sekarang = datetime.now()
-                waktu_scraping_clean = format_waktu_scraping(waktu_sekarang)
                 saved_count = 0
 
                 cleaned_rows = []
 
                 for berita in daftar_berita[:25]:  # Ambil 25 berita pertama
+                    img_tag = berita.find('img')
+                    img_url = img_tag.get('src') if img_tag else None
                     judul_asli = " ".join(berita.text.split())
                     judul_clean = bersihkan_teks(judul_asli)
                     url_link = berita.get('href')
                     url_link_clean = normalisasi_url(url_link)
 
                     # Simpan data mentah ke tabel tbl_berita
-                    sql_raw = "INSERT INTO tbl_berita (judul, url_link, waktu_scraping) VALUES (%s, %s, %s)"
-                    val_raw = (judul_asli, url_link, waktu_sekarang)
+                    sql_raw = "INSERT INTO tbl_berita (judul, url_link, url_gambar, waktu_scraping) VALUES (%s, %s, %s, %s)"
+                    val_raw = (judul_asli, url_link, img_url, waktu_sekarang)
                     cursor.execute(sql_raw, val_raw)
 
                     # Simpan data hasil cleaning ke tabel hasil_cleaning
                     sql_clean = (
-                        "INSERT INTO hasil_cleaning (judul_asli, judul_clean, url_link, url_link_clean, waktu_scraping) "
-                        "VALUES (%s, %s, %s, %s, %s)"
+                        "INSERT INTO hasil_cleaning (judul_asli, judul_clean, url_link, url_link_clean, url_gambar, waktu_scraping) "
+                        "VALUES (%s, %s, %s, %s, %s, %s)"
                     )
-                    val_clean = (judul_asli, judul_clean, url_link, url_link_clean, waktu_sekarang)
+                    val_clean = (judul_asli, judul_clean, url_link, url_link_clean, img_url, waktu_sekarang)
                     cursor.execute(sql_clean, val_clean)
 
                     cleaned_rows.append({
@@ -137,7 +118,8 @@ def ambil_judul_detik():
                         'judul_clean': judul_clean,
                         'url_link': url_link,
                         'url_link_clean': url_link_clean,
-                        'waktu_scraping': waktu_scraping_clean,
+                        'url_gambar': img_url,
+                        'waktu_scraping': waktu_sekarang,
                     })
 
                     saved_count += 1
