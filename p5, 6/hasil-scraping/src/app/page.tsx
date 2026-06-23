@@ -4,8 +4,24 @@ import { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"], weight: ["400", "600"] });
 
+interface Berita {
+  id: number;
+  judul: string;
+  judul_asli: string;
+  judul_clean: string;
+  url_link: string;
+  url_gambar: string | null;
+  isi_berita: string | null;
+  kategori?: string | null;
+  waktu_scraping: string;
+}
+
 // Helper to safely parse and format date strings or timestamps
-function formatDate(value: any): string {
+function formatDate(value: string | number | Date | null | undefined): string {
+  if (!value) {
+    return "Tanggal tidak valid";
+  }
+
   let date = new Date(value);
   if (isNaN(date.getTime())) {
     // Try treating as Unix timestamp (seconds)
@@ -21,9 +37,9 @@ function formatDate(value: any): string {
 }
 
 export default function BeritaPage() {
-  const [daftarBerita, setDaftarBerita] = useState([]);
+  const [daftarBerita, setDaftarBerita] = useState<Berita[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedBerita, setSelectedBerita] = useState<any>(null);
+  const [selectedBerita, setSelectedBerita] = useState<Berita | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9; // 3 columns x 3 rows per page
 
@@ -90,7 +106,7 @@ export default function BeritaPage() {
                 (currentPage - 1) * itemsPerPage,
                 currentPage * itemsPerPage,
               )
-              .map((berita: any) => (
+              .map((berita) => (
                 <div
                   key={berita.id}
                   className="cursor-pointer"

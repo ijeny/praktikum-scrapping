@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 interface Berita {
   id: number;
   judul: string;
+  judul_asli: string;
+  judul_clean: string;
   url_link: string;
   url_gambar: string | null;
   isi_berita: string | null;
@@ -14,7 +16,17 @@ export async function GET() {
   try {
     // Mengambil semua data dari tbl_berita diurutkan dari yang terbaru
     const [rows] = await db.query(
-      "SELECT * FROM tbl_berita ORDER BY waktu_scraping DESC",
+      `SELECT
+        id,
+        judul,
+        judul AS judul_asli,
+        judul AS judul_clean,
+        url_link,
+        url_gambar,
+        isi_berita,
+        waktu_scraping
+      FROM tbl_berita
+      ORDER BY waktu_scraping DESC`,
     );
 
     const dataBerita = rows as Berita[];
