@@ -1,0 +1,16 @@
+
+> nama-project@0.1.0 dev
+> next dev -p 3000
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.8:3000
+- Environments: .env.local
+✓ Ready in 752ms
+Creating turbopack project {
+  dir: 'D:\\Repo\\hivicode\\praktikum-scrapping\\P7, 8\\hasil-scraping',
+  testMode: true
+}
+
+○ Compiling / ...
+[?25h

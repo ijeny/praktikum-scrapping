@@ -1,0 +1,59 @@
+import { db } from "@/app/lib/db";
+import { NextResponse } from "next/server";
+
+interface Berita {
+  id: number;
+  judul: string;
+  judul_asli: string;
+  judul_clean: string;
+  url_link: string;
+  url_gambar: string | null;
+  isi_berita: string | null;
+  kategori: string | null;
+  waktu_scraping: string;
+}
+
+export async function GET() {
+  try {
+    // Mengambil semua data dari tbl_berita diurutkan dari yang terbaru
+    const [rows] = await db.query(
+      `SELECT
+        id,
+        judul,
+        judul AS judul_asli,
+        judul AS judul_clean,
+        url_link,
+        url_gambar,
+        isi_berita,
+        kategori,
+        waktu_scraping
+      FROM tbl_berita
+      ORDER BY waktu_scraping DESC`,
+    );
+
+    const dataBerita = rows as Berita[];
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Berhasil mengambil data berita",
+        total: dataBerita.length,
+        data: dataBerita,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error("Database Error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Terjadi kesalahan pada server";
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Gagal memuat data dari database",
+        error: errorMessage,
+      },
+      { status: 500 },
+    );
+  }
+}

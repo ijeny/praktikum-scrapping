@@ -1,0 +1,299 @@
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+#
+# Fatal javascript OOM in MemoryChunk allocation failed during deserialization.
+#
+
+
+
+
+#
+<--- Last few GCs --->
+# Fatal error in , line 0
+
+# Fatal process out of memory: Zone
+#
+[43688:000001EEAB2CA230]     4088 ms: Scavenge 4.8 (6.4) -> 4.8 (7.1) MB, 0.96 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+[43688:000001EEAB2CA230]     4122 ms: Scavenge 6.5 (7.9) -> 5.6 (7.1) MB, 0.64 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+#
+[43688:000001EEAB2CA230]     4148 ms: Scavenge 5.9 (7.1) -> 5.7 (9.9) MB, 3.98 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+#
+
+#FailureMessage Object: 000000BCCFFF63F0
+
+----- Native stack trace -----
+<--- JS stacktrace --->
+
+
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+[33144:0000018F955B0080]      227 ms: Scavenge 8.6 (10.8) -> 7.6 (11.3) MB, 1.54 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+[33144:0000018F955B0080]     6422 ms: Scavenge 9.8 (12.1) -> 9.1 (13.1) MB, 1.67 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+[33144:0000018F955B0080]     7598 ms: Scavenge 10.7 (13.3) -> 9.7 (11.1) MB, 1002.37 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Committing semi space failed. Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF6C866C23B node::SetCppgcReference+19883
+ 2: 00007FF6C855D91F node::TriggerNodeReport+74223
+ 3: 00007FF6C9477862 V8_Fatal+162
+ 4: 00007FF6C903E663 v8::Function::Experimental_IsNopFunction+835
+ 1: 00007FF6C866C23B node::SetCppgcReference+19883
+ 5: 00007FF6C8B210B4 v8::SnapshotCreator::GetIsolate+53284
+ 2: 00007FF6C85DB1B8 v8::base::CPU::num_virtual_address_bits+93912
+ 6: 00007FF6C898BB6C v8::internal::Version::IsCandidate+87756
+ 3: 00007FF6C90551D1 v8::Isolate::ReportExternalAllocationLimitReached+65
+ 7: 00007FF6C968CEB6 inflateInit2_+2097062
+ 4: 00007FF6C903E858 v8::Function::Experimental_IsNopFunction+1336
+ 8: 00007FF6C9687639 inflateInit2_+2074409
+ 1: 00007FF6C866C23B node::SetCppgcReference+19883
+ 5: 00007FF6C8B210B4 v8::SnapshotCreator::GetIsolate+53284
+ 9: 00007FF6C96886F2 inflateInit2_+2078690
+ 2: 00007FF6C85DB1B8 v8::base::CPU::num_virtual_address_bits+93912
+ 6: 00007FF6C8C120DE v8::base::Thread::StartSynchronously+150510
+10: 00007FF6C953FCF2 inflateInit2_+732642
+ 3: 00007FF6C90551D1 v8::Isolate::ReportExternalAllocationLimitReached+65
+ 7: 00007FF6C8C243F7 v8::base::Thread::StartSynchronously+225031
+11: 00007FF6C953D75C inflateInit2_+723020
+ 4: 00007FF6C903E858 v8::Function::Experimental_IsNopFunction+1336
+ 8: 00007FF6C8C244F3 v8::base::Thread::StartSynchronously+225283
+12: 00007FF6C95393AA inflateInit2_+705690
+ 5: 00007FF6C8EA0490 v8::Platform::SystemClockTimeMillis+659696
+ 9: 00007FF6C8C235BA v8::base::Thread::StartSynchronously+221386
+13: 00007FF6C8FAD031 v8::SharedValueConveyor::SharedValueConveyor+29329
+ 6: 00007FF6C8E58293 v8::Platform::SystemClockTimeMillis+364275
+10: 00007FF6C8C22633 v8::base::Thread::StartSynchronously+217411
+14: 00007FF6C8F79F31 v8::Proxy::GetTarget+45521
+ 7: 00007FF6C8EA9AF0 v8::Platform::SystemClockTimeMillis+698192
+11: 00007FF6C8C23E44 v8::base::Thread::StartSynchronously+223572
+15: 00007FF6C85603FD v8::CpuProfileNode::GetParent+829
+ 8: 00007FF6C8E9D1B0 v8::Platform::SystemClockTimeMillis+646672
+12: 00007FF6C8C14D79 v8::base::Thread::StartSynchronously+161929
+16: 00007FF6C86BFFBD uv_poll_stop+237
+ 9: 00007FF6C8EB27CA v8::Platform::SystemClockTimeMillis+734250
+13: 00007FF6C8C290FF v8::base::Thread::StartSynchronously+244751
+17: 00007FF6C989AE80 inflateValidate+153984
+10: 00007FF6C8EB3047 v8::Platform::SystemClockTimeMillis+736423
+14: 00007FF6C8C0E822 v8::base::Thread::StartSynchronously+135986
+18: 00007FFEBE93E957 BaseThreadInitThunk+23
+11: 00007FF6C8EBBC7E v8::Platform::SystemClockTimeMillis+772318
+15: 00007FF6C8FAB3DB v8::SharedValueConveyor::SharedValueConveyor+22075
+19: 00007FFEBF387C1C RtlUserThreadStart+44
+12: 00007FF6C8ECFF74 v8::Platform::SystemClockTimeMillis+854996
+16: 00007FF6C8FB0A0B v8::SharedValueConveyor::SharedValueConveyor+44139
+13: 00007FF6C8C6EC47 v8::base::Thread::StartSynchronously+530263
+17: 00007FF6C90387FC v8::ScriptCompiler::CompileFunctionInternal+1260
+14: 00007FF6C8C6EBCE v8::base::Thread::StartSynchronously+530142
+18: 00007FF6C9038304 v8::ScriptCompiler::CompileFunction+84
+15: 00007FF6C8C898AD v8::base::Thread::StartSynchronously+639933
+19: 00007FF6C85E88EC node::OnFatalError+55036
+16: 00007FF6C8C8C74A v8::base::Thread::StartSynchronously+651866
+20: 00007FF6C85E8E64 node::OnFatalError+56436
+17: 00007FF6C8C88699 v8::base::Thread::StartSynchronously+635305
+21: 00007FF6C900B71E v8::SharedValueConveyor::SharedValueConveyor+416126
+18: 00007FF6C8C89374 v8::base::Thread::StartSynchronously+638596
+22: 00007FF6C900B31A v8::SharedValueConveyor::SharedValueConveyor+415098
+19: 00007FF6C8C8D33F v8::base::Thread::StartSynchronously+654927
+23: 00007FF6C900B5DF v8::SharedValueConveyor::SharedValueConveyor+415807
+20: 00007FF6C8C95F22 v8::base::Thread::StartSynchronously+690738
+24: 00007FF6C900B450 v8::SharedValueConveyor::SharedValueConveyor+415408
+21: 00007FF6C8C6B780 v8::base::Thread::StartSynchronously+516752
+25: 00007FF6C910055E v8::PropertyDescriptor::writable+652030
+22: 00007FF6C8CE3441 v8::base::Thread::StartSynchronously+1007441
+26: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+23: 00007FF6C8CE381F v8::base::Thread::StartSynchronously+1008431
+27: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+24: 00007FF6C8DC9FC0 v8::base::time_internal::TimeBase<v8::base::ThreadTicks>::operator!=+54320
+28: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+25: 00007FF6C8DC6568 v8::base::time_internal::TimeBase<v8::base::ThreadTicks>::operator!=+39384
+29: 00007FF649272F1D 
+26: 00007FF6C8DCBC0C v8::base::time_internal::TimeBase<v8::base::ThreadTicks>::operator!=+61564
+27: 00007FF6C8FE4C28 v8::SharedValueConveyor::SharedValueConveyor+257672
+28: 00007FF6C8FE4EA0 v8::SharedValueConveyor::SharedValueConveyor+258304
+29: 00007FF6C910055E v8::PropertyDescriptor::writable+652030
+30: 00007FF649271925 
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Committing semi space failed. Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF6C866C23B 
+ 2: 00007FF6C85DB1B8 
+ 3: 00007FF6C90551D1 
+ 4: 00007FF6C903E858 
+ 5: 00007FF6C8EA0490 
+ 6: 00007FF6C8E58293 
+ 7: 00007FF6C8EA9AF0 
+ 8: 00007FF6C8E9D1B0 
+ 9: 00007FF6C8EB27CA 
+10: 00007FF6C8EB3047 
+11: 00007FF6C8EBBC7E 
+12: 00007FF6C8ECFF74 
+13: 00007FF6C8C6EC47 
+14: 00007FF6C8C6EBCE 
+15: 00007FF6C8C898AD 
+16: 00007FF6C8C8C74A 
+17: 00007FF6C8C88699 
+18: 00007FF6C8C89374 
+19: 00007FF6C8C8D33F 
+20: 00007FF6C8C95F22 
+21: 00007FF6C8C6B780 
+22: 00007FF6C8C802B4 
+23: 00007FF6C8E28E2A 
+24: 00007FF6C8E27309 
+25: 00007FF6C910065E 
+26: 00007FF6C91B1966 
+27: 00007FF6C9071600 
+28: 00007FF6C9071600 
+29: 00007FF6C9071600 
+30: 00007FF6C9071600 
+31: 00007FF6C9071600 
+32: 00007FF6C906F9C0 
+33: 00007FF6C906F5BB 
+34: 00007FF6C8F20758 
+35: 00007FF6C8F20053 
+36: 00007FF6C903438B 
+37: 00007FF6C85FAA7A 
+38: 00007FF6C854EDDE 
+39: 00007FF6C8552C63 
+40: 00007FF6C869E8D7 
+41: 00007FF6C84C6F3E 
+42: 00007FF6C84C2188 
+43: 00007FF6C86BFFBD 
+44: 00007FF6C989AE80 
+45: 00007FFEBE93E957 BaseThreadInitThunk+23
+46: 00007FFEBF387C1C RtlUserThreadStart+44
+
+#
+# Fatal javascript OOM in MemoryChunk allocation failed during deserialization.
+#
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+#
+# Fatal javascript OOM in MemoryChunk allocation failed during deserialization.
+#
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Committing semi space failed. Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF6C866C23B node::SetCppgcReference+19883
+ 2: 00007FF6C85DB1B8 v8::base::CPU::num_virtual_address_bits+93912
+ 3: 00007FF6C90551D1 v8::Isolate::ReportExternalAllocationLimitReached+65
+ 4: 00007FF6C903E858 v8::Function::Experimental_IsNopFunction+1336
+ 5: 00007FF6C8EA0490 v8::Platform::SystemClockTimeMillis+659696
+ 6: 00007FF6C8E58293 v8::Platform::SystemClockTimeMillis+364275
+ 7: 00007FF6C8EA9AF0 v8::Platform::SystemClockTimeMillis+698192
+ 8: 00007FF6C8E9D1B0 v8::Platform::SystemClockTimeMillis+646672
+ 9: 00007FF6C8EB27CA v8::Platform::SystemClockTimeMillis+734250
+10: 00007FF6C8EB3047 v8::Platform::SystemClockTimeMillis+736423
+11: 00007FF6C8EBBC7E v8::Platform::SystemClockTimeMillis+772318
+12: 00007FF6C8ECFF74 v8::Platform::SystemClockTimeMillis+854996
+13: 00007FF6C8C6EC47 v8::base::Thread::StartSynchronously+530263
+14: 00007FF6C8C6EBCE v8::base::Thread::StartSynchronously+530142
+15: 00007FF6C8C898AD v8::base::Thread::StartSynchronously+639933
+16: 00007FF6C8C8C74A v8::base::Thread::StartSynchronously+651866
+17: 00007FF6C8C88699 v8::base::Thread::StartSynchronously+635305
+18: 00007FF6C8C89374 v8::base::Thread::StartSynchronously+638596
+19: 00007FF6C8C8D33F v8::base::Thread::StartSynchronously+654927
+20: 00007FF6C8C95F22 v8::base::Thread::StartSynchronously+690738
+21: 00007FF6C8C6B780 v8::base::Thread::StartSynchronously+516752
+22: 00007FF6C8C802B4 v8::base::Thread::StartSynchronously+601540
+23: 00007FF6C8E28E2A v8::Platform::SystemClockTimeMillis+170634
+24: 00007FF6C8E27309 v8::Platform::SystemClockTimeMillis+163689
+25: 00007FF6C910065E v8::PropertyDescriptor::writable+652286
+26: 00007FF6C91B1966 v8::PropertyDescriptor::writable+1378054
+27: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+28: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+29: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+30: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+
+31: 00007FF6C9071600 v8::PropertyDescriptor::writable+66464
+<--- Last few GCs --->
+32: 00007FF6C906F9C0 v8::PropertyDescriptor::writable+59232
+
+33: 00007FF6C906F5BB v8::PropertyDescriptor::writable+58203
+[44872:0000024B6AC1AAB0]     6413 ms: Scavenge 6.0 (7.2) -> 5.3 (9.4) MB, 0.54 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+34: 00007FF6C8F20758 v8::PrimitiveArray::Length+3928
+[44872:0000024B6AC1AAB0]     6490 ms: Scavenge 7.8 (10.0) -> 6.9 (10.5) MB, 1.22 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+35: 00007FF6C8F20053 v8::PrimitiveArray::Length+2131
+[44872:0000024B6AC1AAB0]     7625 ms: Scavenge 9.1 (11.3) -> 8.3 (16.0) MB, 1003.26 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+36: 00007FF6C903438B v8::Function::Call+571
+
+37: 00007FF6C85FAA7A node::OnFatalError+129162
+
+38: 00007FF6C854EDDE node::TriggerNodeReport+13998
+<--- JS stacktrace --->
+39: 00007FF6C8552C63 node::TriggerNodeReport+30003
+
+40: 00007FF6C869E8D7 node::CreateEnvironment+599
+FATAL ERROR: NewSpace::EnsureCurrentCapacity Allocation failed - JavaScript heap out of memory
+41: 00007FF6C84C6F3E RSA_meth_get_flags+210206
+----- Native stack trace -----
+42: 00007FF6C84C2188 RSA_meth_get_flags+190312
+
+43: 00007FF6C86BFFBD uv_poll_stop+237
+ 1: 00007FF6C866C23B 
+44: 00007FF6C989AE80 inflateValidate+153984
+ 2: 00007FF6C85DB1B8 
+45: 00007FFEBE93E957 BaseThreadInitThunk+23
+ 3: 00007FF6C90551D1 
+46: 00007FFEBF387C1C RtlUserThreadStart+44
+ 4: 00007FF6C903E858 
+ 5: 00007FF6C8EA0490 
+ 6: 00007FF6C8E79990 
+ 7: 00007FF6C8EA707A 
+ 8: 00007FF6C8EA9B3C 
+ 9: 00007FF6C8E9D1B0 
+10: 00007FF6C8EB27CA 
+11: 00007FF6C8EB3047 
+12: 00007FF6C8EBBC7E 
+13: 00007FF6C8ED1BEE 
+14: 00007FF6C8ED2072 
+15: 00007FF6C8FA64D3 
+16: 00007FF6C8DD44AF 
+17: 00007FF6C8DD5370 
+18: 00007FF6C8DCD8EF 
+19: 00007FF6C8DCE38E 
+20: 00007FF6C8FAD76E 
+21: 00007FF6C8FA5E72 
+22: 00007FF6C8FA6A62 
+23: 00007FF6C8FAB6EF 
+24: 00007FF6C8FB0A0B 
+25: 00007FF6C90387FC 
+26: 00007FF6C9038304 
+27: 00007FF6C85E88EC 
+28: 00007FF6C85E8E64 
+29: 00007FF6C900B71E 
+30: 00007FF6C900B31A 
+31: 00007FF6C900B5DF 
+32: 00007FF6C900B450 
+33: 00007FF6C910055E 
+34: 00007FF64927BD33 
