@@ -26,6 +26,14 @@ HEADERS = {
     )
 }
 
+KANAL_TEKNOLOGI = {
+    "consumer",
+    "cyberlife",
+    "games-news",
+    "science",
+    "telecommunication",
+}
+
 
 def buat_folder(nama_folder):
     if not os.path.exists(nama_folder):
@@ -46,6 +54,15 @@ def tulis_log(judul, link):
 
     with open(nama_file, "a", encoding="utf-8") as file:
         file.write(f"{waktu} | Berhasil simpan data: {judul} | {link}\n")
+
+
+def tentukan_kategori(link):
+    bagian_url = link.split("inet.detik.com/", 1)
+    if len(bagian_url) < 2:
+        return "Umum"
+
+    kanal = bagian_url[1].split("/", 1)[0]
+    return "Teknologi" if kanal in KANAL_TEKNOLOGI else "Umum"
 
 
 def buat_database_dan_tabel():
@@ -72,6 +89,7 @@ def buat_database_dan_tabel():
                 url_link TEXT,
                 url_gambar TEXT,
                 isi_berita LONGTEXT,
+                kategori VARCHAR(50) DEFAULT 'Teknologi',
                 waktu_scraping DATETIME
             )
             """
@@ -82,6 +100,14 @@ def buat_database_dan_tabel():
 
         if "isi_berita" not in kolom_tabel:
             cursor.execute("ALTER TABLE tbl_berita ADD COLUMN isi_berita LONGTEXT")
+
+        if "kategori" not in kolom_tabel:
+            cursor.execute(
+                "ALTER TABLE tbl_berita ADD COLUMN kategori VARCHAR(50) DEFAULT 'Teknologi'"
+            )
+            cursor.execute(
+                "UPDATE tbl_berita SET kategori = 'Teknologi' WHERE kategori IS NULL"
+            )
 
         if "waktu_scraping" not in kolom_tabel:
             cursor.execute("ALTER TABLE tbl_berita ADD COLUMN waktu_scraping DATETIME")
@@ -177,6 +203,7 @@ def ambil_berita_detik():
                     "url_link": link,
                     "url_gambar": url_gambar,
                     "isi_berita": isi_berita,
+                    "kategori": tentukan_kategori(link),
                     "waktu_scraping": datetime.now(),
                 }
             )
@@ -216,14 +243,15 @@ def simpan_berita_ke_database(daftar_berita):
 
             sql = (
                 "INSERT INTO tbl_berita "
-                "(judul, url_link, url_gambar, isi_berita, waktu_scraping) "
-                "VALUES (%s, %s, %s, %s, %s)"
+                "(judul, url_link, url_gambar, isi_berita, kategori, waktu_scraping) "
+                "VALUES (%s, %s, %s, %s, %s, %s)"
             )
             val = (
                 berita["judul"],
                 berita["url_link"],
                 berita["url_gambar"],
                 berita["isi_berita"],
+                berita["kategori"],
                 berita["waktu_scraping"],
             )
 

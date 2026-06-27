@@ -9,6 +9,7 @@ interface Berita {
   url_link: string;
   url_gambar: string | null;
   isi_berita: string | null;
+  kategori: string | null;
   waktu_scraping: string;
 }
 
@@ -24,6 +25,7 @@ export async function GET() {
         url_link,
         url_gambar,
         isi_berita,
+        kategori,
         waktu_scraping
       FROM tbl_berita
       ORDER BY waktu_scraping DESC`,

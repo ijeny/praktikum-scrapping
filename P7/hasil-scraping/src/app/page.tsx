@@ -91,6 +91,15 @@ export default function BeritaPage() {
           Hasil Scraping Detik Inet Terbaru
         </h2>
 
+        <div className="bg-white/90 rounded-xl shadow-md p-5 mb-6 border-l-4 border-indigo-600">
+          <p className="text-sm font-semibold text-gray-500 uppercase">
+            Dashboard Statistik
+          </p>
+          <p className="text-2xl font-bold text-gray-900 mt-1">
+            Total Berita Dimuat: {daftarBerita.length}
+          </p>
+        </div>
+
         {daftarBerita.length === 0 ? (
           <div className="bg-white p-8 rounded-lg shadow-md text-center">
             <p className="text-gray-600 text-lg">
@@ -106,12 +115,19 @@ export default function BeritaPage() {
                 (currentPage - 1) * itemsPerPage,
                 currentPage * itemsPerPage,
               )
-              .map((berita) => (
-                <div
-                  key={berita.id}
-                  className="cursor-pointer"
-                  onClick={() => setSelectedBerita(berita)}
-                >
+              .map((berita) => {
+                const kategoriBerita = berita.kategori || "Umum";
+                const kategoriBadgeClass =
+                  kategoriBerita === "Teknologi"
+                    ? "bg-green-100 text-green-800"
+                    : "bg-blue-100 text-blue-800";
+
+                return (
+                  <div
+                    key={berita.id}
+                    className="cursor-pointer"
+                    onClick={() => setSelectedBerita(berita)}
+                  >
                   <div className="bg-white/90 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 flex flex-col backdrop-blur-sm">
                     {/* Bagian Gambar Berita */}
                     <div className="h-48 w-full bg-gray-200 relative">
@@ -135,8 +151,10 @@ export default function BeritaPage() {
                     {/* Konten Teks Kartu */}
                     <div className="p-5 flex-grow flex flex-col justify-between">
                       <div>
-                        <span className="inline-block bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-1 rounded uppercase mb-3">
-                          {berita.kategori || "Umum"}
+                        <span
+                          className={`inline-block ${kategoriBadgeClass} text-xs font-bold px-2.5 py-1 rounded uppercase mb-3`}
+                        >
+                          {kategoriBerita}
                         </span>
                         <h3 className="font-bold text-gray-900 text-md leading-snug line-clamp-2 hover:text-indigo-600 transition-colors duration-200">
                           {berita.judul_clean}
@@ -153,8 +171,9 @@ export default function BeritaPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
           </div>
         )}
       </main>
@@ -238,8 +257,30 @@ export default function BeritaPage() {
         </div>
       )}
       <footer className="bg-gray-800 text-gray-400 text-center p-4 text-xs">
-        &copy; {new Date().getFullYear()} Praktikum Data Scraping - S1 Sistem
-        Informasi STIKOM PGRI Banyuwangi
+        <p>
+          &copy; {new Date().getFullYear()} Praktikum Data Scraping - S1 Sistem
+          Informasi STIKOM PGRI Banyuwangi
+        </p>
+        <p className="mt-2">
+          1124102181{" "}
+          <a
+            href="https://github.com/ijeny"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 hover:text-blue-200 underline"
+          >
+            Imtinan Jeny Maulidah Belvariyanto
+          </a>{" "}
+          | 1124102166{" "}
+          <a
+            href="https://github.com/hivicode"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 hover:text-blue-200 underline"
+          >
+            Bintang Fathir Fadilah Achmad
+          </a>
+        </p>
       </footer>
     </div>
   );
