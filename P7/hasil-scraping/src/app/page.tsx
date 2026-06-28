@@ -41,15 +41,17 @@ export default function BeritaPage() {
   const [loading, setLoading] = useState(true);
   const [selectedBerita, setSelectedBerita] = useState<Berita | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const itemsPerPage = 9; // 3 columns x 3 rows per page
 
   // Mengambil data dari API secara otomatis saat halaman dibuka
   useEffect(() => {
-    fetch("/api/berita")
+    fetch(`/api/berita?page=${currentPage}&limit=${itemsPerPage}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.success) {
           setDaftarBerita(json.data);
+          setTotalItems(json.total || 0);
         }
         setLoading(false);
       })
@@ -57,7 +59,9 @@ export default function BeritaPage() {
         console.error("Gagal mengambil data API:", err);
         setLoading(false);
       });
-  }, []);
+  }, [currentPage]);
+
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
 
   if (loading) {
     return (
@@ -96,7 +100,7 @@ export default function BeritaPage() {
             Dashboard Statistik
           </p>
           <p className="text-2xl font-bold text-gray-900 mt-1">
-            Total Berita Dimuat: {daftarBerita.length}
+            Total Berita Dimuat: {totalItems}
           </p>
         </div>
 
@@ -110,12 +114,7 @@ export default function BeritaPage() {
         ) : (
           /* GRID SYSTEM: 1 Kolom di HP, 2 Kolom di Tablet, 3 Kolom di Laptop/PC */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {daftarBerita
-              .slice(
-                (currentPage - 1) * itemsPerPage,
-                currentPage * itemsPerPage,
-              )
-              .map((berita) => {
+            {daftarBerita.map((berita) => {
                 const kategoriBerita = berita.kategori || "Umum";
                 const kategoriBadgeClass =
                   kategoriBerita === "Teknologi"
@@ -179,7 +178,7 @@ export default function BeritaPage() {
       </main>
 
       {/* PAGINATION */}
-      {daftarBerita.length > itemsPerPage && (
+      {totalPages > 1 && (
         <div className="flex justify-center items-center space-x-4 mt-6">
           <button
             className="px-5 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200"
@@ -189,8 +188,7 @@ export default function BeritaPage() {
             ← Prev
           </button>
           <span className="text-gray-800 font-medium">
-            Page {currentPage} of{" "}
-            {Math.ceil(daftarBerita.length / itemsPerPage)}
+            Page {currentPage} of {totalPages}
           </span>
           <button
             className="px-5 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200"
@@ -198,13 +196,11 @@ export default function BeritaPage() {
               setCurrentPage((prev) =>
                 Math.min(
                   prev + 1,
-                  Math.ceil(daftarBerita.length / itemsPerPage),
+                  totalPages,
                 ),
               )
             }
-            disabled={
-              currentPage === Math.ceil(daftarBerita.length / itemsPerPage)
-            }
+            disabled={currentPage === totalPages}
           >
             Next →
           </button>

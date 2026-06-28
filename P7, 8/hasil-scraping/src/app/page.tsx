@@ -127,15 +127,13 @@ export default function BeritaPage() {
   const [hasLoadingImage, setHasLoadingImage] = useState(true);
   const [selectedBerita, setSelectedBerita] = useState<Berita | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [dark, setDark] = useState(false);
   const itemsPerPage = 9;
 
   const theme: Theme = dark ? NIGHT : DAY;
-  const totalPages = Math.max(1, Math.ceil(daftarBerita.length / itemsPerPage));
-  const pagedBerita = useMemo(
-    () => daftarBerita.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage),
-    [currentPage, daftarBerita],
-  );
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+  const pagedBerita = useMemo(() => daftarBerita, [daftarBerita]);
 
   useEffect(() => {
     const startedAt = Date.now();
@@ -145,19 +143,19 @@ export default function BeritaPage() {
       window.setTimeout(() => setLoading(false), remainingTime);
     };
 
-    fetch("/api/berita")
+    fetch(`/api/berita?page=${currentPage}&limit=${itemsPerPage}`)
       .then((res) => res.json())
       .then((json) => {
         setDaftarBerita(json.success ? json.data : []);
-        setCurrentPage(1);
+        setTotalItems(json.success ? json.total || 0 : 0);
         finishLoading();
       })
       .catch((err) => {
         console.error("Gagal mengambil data API:", err);
-        setCurrentPage(1);
+        setTotalItems(0);
         finishLoading();
       });
-  }, []);
+  }, [currentPage]);
 
   if (loading) {
     return (
@@ -277,7 +275,7 @@ export default function BeritaPage() {
                 Total Artikel
               </p>
               <p className="text-2xl font-bold" style={{ color: theme.fg }}>
-                {daftarBerita.length}
+                {totalItems}
               </p>
             </div>
           </div>

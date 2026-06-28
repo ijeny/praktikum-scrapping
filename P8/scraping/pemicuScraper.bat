@@ -5,7 +5,7 @@ echo Menjalankan Script Otomasi Scraper STIKOM...
 
 call ..\..\.venv\Scripts\activate
 python index.py
-deactivate
 
+echo.
 echo Selesai!
 pause
